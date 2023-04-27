@@ -1,0 +1,20 @@
+{% extends "layouts/master.html" %}
+{% block title %}
+Category | CREATE
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    <hr>
+    <div class = 'card p-5'>
+        <form action="{% url 'category-create' %}">
+            {% crsf_token %}
+            {{ form.as_p}}
+
+            <input type="submit" class="btn btn-sm btn-primary" value="Add Category">
+        </form>
+
+    </div>
+</div>
+{% endblock %}

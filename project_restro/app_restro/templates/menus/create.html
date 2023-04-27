@@ -1,0 +1,27 @@
+{% extends "layouts/master.html" %}
+{% block title %}
+Menu | CREATE
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    <hr>
+    <div class = 'card p-5'>
+        <form action="{% url 'menu-add' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <input type="submit" class="btn btn-sm btn-primary" value="Add Category">
+        </form>
+
+    </div>
+</div>
+
+<div class="container">
+    {% if desc %}
+    {{ desc }}
+    {% endif %}
+
+</div>
+{% endblock %}
