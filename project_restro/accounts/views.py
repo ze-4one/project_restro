@@ -15,25 +15,23 @@ class RegistrationView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = User.objects.create_user(first_name=first_name, last_name=last_name,
-                                        email=email, username=username,
-                                        password=password)
+                                        email=email, username=username)
         user.set_password(password)
         user.is_staff = False
         user.is_active = False
         user.save()
         return redirect("register")
-    
 
 class LoginView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
-    
+
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)        
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect
+            return redirect("menu-list")
         else:
-            print("Something went wrong")
+            return redirect("login")

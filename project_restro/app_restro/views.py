@@ -114,8 +114,23 @@ def menu_delete(request, id):
     return redirect("menu-list")
 
 # category views
+# def category_create(request):
+#     form = CategoryCreateForm()
+#     context = {
+#         "form": form,
+#         "title": "Category Create Form"
+#     }
+#     return render(request, "menus/add_category.html", context)
+
 def category_create(request):
-    form = CategoryCreateForm()
+    if request.method == "POST":
+        form = CategoryCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("menu-list")
+    else:
+        form = CategoryCreateForm()
+
     context = {
         "form": form,
         "title": "Category Create Form"
