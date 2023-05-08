@@ -18,7 +18,7 @@ Menu | EDIT
             </div>
             <div class="form-group mb-3">
                 <label for="category_id">Menu Category</label>
-                <select class="form-control mt3" name="category-create" id="">{% for val in categories %}
+                <select class="form-control mt3" name="category_id" id="">{% for val in categories %}
                     <option value="{{ val.id}}">{{ val.category_name }}</option>
                     {% endfor %}
                 </select>
@@ -45,7 +45,7 @@ Menu | EDIT
             </div>
             <div class="form-group mb-3">
                 <label for="menu_price">Menu Price</label>
-                <input type="text" name="menu_price" class="form-control mt-2" value="{{ data.menu_price }}">
+                <input type="text" name="menu_price" class="form-control mt-2" value="{{ data.menu_price}}">   
             </div>
             <div class="form-group mb-3">
                 <label for="menu_img">Menu Image</label>

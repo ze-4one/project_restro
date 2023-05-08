@@ -1,12 +1,26 @@
 from django.shortcuts import render, redirect
 from .forms import CategoryCreateForm, MenuCreateForm
 from .models import Category, Menu
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/authentication/login')
 def menu_index(request):
     data = Menu.objects.all()
-    context = {"data": data}
+    categories = Category.objects.all()
+    context = {"data": data, "categories": categories}
+    if request.method == 'POST':
+        if request.POST.get('id') is not None:
+            filter_list = Menu.objects.filter(id=request.POST.get('id'))
+        if request.POST.get('category_id') is not None:
+            filter_list = Menu.objects.filter(category_id=request.POST.get('category_id'))
+
+        context.update({"data":filter_list})
+
+
     return render(request, 'menus/index.html', context)
+
+@login_required(login_url='/authentication/login')
 
 def menu_add(request):
     menu_form = MenuCreateForm()
@@ -45,6 +59,9 @@ def menu_add(request):
 
     return render(request, 'menus/create.html', context)
 
+
+@login_required(login_url='/authentication/login')
+
 def menu_update(request):
     if request.method == "POST":
         id = request.POST.get('category_id')
@@ -60,6 +77,9 @@ def menu_update(request):
         data.save()
 
         return redirect("menu-list")
+
+
+@login_required(login_url='/authentication/login')
 
 def menu_edit(request, id):
     data = Menu.objects.get(id=id)
@@ -79,6 +99,7 @@ def menu_delete(request, id):
     return redirect("menu-list")
 
 # category views
+@login_required(login_url='/authentication/login')
 def category_create(request):
     form = CategoryCreateForm()
     context = {
